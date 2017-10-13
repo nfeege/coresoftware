@@ -3,7 +3,7 @@
 #define __PHBFIELDMAPOBJ_H__
 
 #include <TDataType.h>
-#include <PHException.h>
+//#include <PHException.h>
 #include <vector>
 #include <iomanip>
 #include <climits>

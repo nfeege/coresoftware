@@ -87,7 +87,7 @@ PHBFieldMapObj::initialize()
   
   TNtuple* nt = (TNtuple*)gDirectory->Get("fieldmap");
   if(!nt){
-    throw std::runtime_error(DESCRIPTION("can't find input file ntuple: fieldmap"));
+    throw std::runtime_error("error");
   }
 
   // Setup locals for nt access
@@ -346,7 +346,7 @@ PHBFieldMapObj::get_field_voxel(const double& x, const double& y, const double& 
 
 #endif
 #ifndef VOXEL_MODE
-  throw std::logic_error(DESCRIPTION("PHBFieldMapObj not compiled for voxel lookup"));
+  throw 1;
 #endif 
   return _field;
 }
