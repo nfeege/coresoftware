@@ -158,6 +158,12 @@ public:
   float get_cal_cluster_e(CAL_LAYER layer) const;
   void  set_cal_cluster_e(CAL_LAYER layer, float e) {_cal_cluster_e[layer] = e;}
   
+  //
+  // particle id probabilities ---------------------------------------------------
+  //
+  virtual float get_pid_probability(PID_CANDIDATE candidate) const;
+  virtual void  set_pid_probability(PID_CANDIDATE candidate, float candidate_prob) { _pid_candidate_prob[candidate] = candidate_prob; }
+
  private: 
   
   // track information
@@ -193,6 +199,9 @@ public:
   std::map<CAL_LAYER,int>   _cal_cluster_id;
   std::map<CAL_LAYER,float> _cal_cluster_e;
   
+  // Particle ID probabilities matches
+  std::map<PID_CANDIDATE,float> _pid_candidate_prob;
+
   ClassDef(SvtxTrack_v1,1)
 };
 

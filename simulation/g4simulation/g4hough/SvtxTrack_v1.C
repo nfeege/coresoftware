@@ -31,7 +31,8 @@ SvtxTrack_v1::SvtxTrack_v1()
     _cal_energy_3x3(),
     _cal_energy_5x5(),
     _cal_cluster_id(),
-    _cal_cluster_e() {
+    _cal_cluster_e(),
+    _pid_candidate_prob() {
   // always include the pca point
   _states.insert(make_pair(0.0,new SvtxTrackState_v1(0.0)));
 }
@@ -94,6 +95,20 @@ SvtxTrack_v1& SvtxTrack_v1::operator=(const SvtxTrack_v1& track) {
     if (!isnan(track.get_cal_energy_5x5(types[i])))     set_cal_energy_5x5(types[i],track.get_cal_energy_5x5(types[i]));
     if (track.get_cal_cluster_id(types[i]) != UINT_MAX) set_cal_cluster_id(types[i],track.get_cal_cluster_id(types[i]));
     if (!isnan(track.get_cal_cluster_e(  types[i])))    set_cal_cluster_e( types[i],track.get_cal_cluster_e( types[i]));
+  }
+
+  // copy over particle id probabilities
+  std::vector<PID_CANDIDATE> pid_candidates;
+  pid_candidates.push_back(SvtxTrack::ELECTRON);
+  pid_candidates.push_back(SvtxTrack::CHARGEDPION);
+  pid_candidates.push_back(SvtxTrack::CHARGEDKAON);
+  pid_candidates.push_back(SvtxTrack::PROTON);
+
+  _pid_candidate_prob.clear();
+
+  for (unsigned int i=0; i<pid_candidates.size(); ++i) {
+    if ( !isnan( track.get_pid_probability ( pid_candidates[i] ) ) )
+      set_pid_probability( pid_candidates[i], track.get_pid_probability( pid_candidates[i] ) );
   }
 
   return *this;
@@ -204,5 +219,11 @@ unsigned int SvtxTrack_v1::get_cal_cluster_id(SvtxTrack::CAL_LAYER layer) const 
 float SvtxTrack_v1::get_cal_cluster_e(SvtxTrack::CAL_LAYER layer) const {
   std::map<SvtxTrack::CAL_LAYER,float>::const_iterator citer = _cal_cluster_e.find(layer);
   if (citer == _cal_cluster_e.end()) return NAN;
+  return citer->second;
+}
+
+float SvtxTrack_v1::get_pid_probability(SvtxTrack::PID_CANDIDATE candidate) const {
+  std::map<SvtxTrack::PID_CANDIDATE,float>::const_iterator citer = _pid_candidate_prob.find(candidate);
+  if (citer == _pid_candidate_prob.end()) return NAN;
   return citer->second;
 }

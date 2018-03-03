@@ -24,6 +24,8 @@ public:
   
   enum CAL_LAYER {PRES=0,CEMC=1,HCALIN=2,HCALOUT=3,FEMC=4,FHCAL=5,EEMC=6};
 
+  enum PID_CANDIDATE {ELECTRON=0,CHARGEDPION=1,CHARGEDKAON=2,PROTON=3};
+
   virtual ~SvtxTrack() {}
   
   // The "standard PHObject response" functions...
@@ -168,6 +170,12 @@ public:
 
   virtual float get_cal_cluster_e(CAL_LAYER layer) const    {return 0.;}
   virtual void  set_cal_cluster_e(CAL_LAYER layer, float e) {}
+
+  //
+  // particle id probabilities ---------------------------------------------------
+  //
+  virtual float get_pid_probability(PID_CANDIDATE candidate) const             {return 0.;}
+  virtual void  set_pid_probability(PID_CANDIDATE candidate, float candidate_prob) {}
 
 protected:
   SvtxTrack() {}
