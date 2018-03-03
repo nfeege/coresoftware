@@ -22,7 +22,7 @@ public:
   typedef ClusterSet::const_iterator ConstClusterIter;
   typedef ClusterSet::iterator       ClusterIter;
   
-  enum CAL_LAYER {PRES=0,CEMC=1,HCALIN=2,HCALOUT=3};
+  enum CAL_LAYER {PRES=0,CEMC=1,HCALIN=2,HCALOUT=3,FEMC=4,FHCAL=5,EEMC=6};
 
   virtual ~SvtxTrack() {}
   
