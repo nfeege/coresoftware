@@ -3,13 +3,13 @@
 
 #include "PHG4CellDefs.h"
 #include <g4main/PHG4Hit.h>
-#include <phool/PHObject.h>
+#include <TObject.h>
 
 #include <cmath>
 #include <climits>
 #include <map>
 
-class PHG4Cell: public PHObject
+class PHG4Cell: public TObject
 {
  public:
   typedef std::map<PHG4HitDefs::keytype, float> EdepMap;
@@ -43,6 +43,7 @@ class PHG4Cell: public PHObject
 
   // this adds hits to the g4 hit list map
   virtual void add_edep(const PHG4HitDefs::keytype g4hitid, const float edep) {return;}
+  virtual void add_edep(const PHG4HitDefs::keytype g4hitid, const int tbin, const float edep) {return;}
   // this adds showers to the shower map
   virtual void add_shower_edep(const int g4showerid, const float edep) {return;}
 
@@ -95,13 +96,13 @@ class PHG4Cell: public PHObject
   virtual void set_stave_index(const int i) {return;}
   virtual int get_stave_index() const {return ~0x0;}
 
-  virtual tpctod* get_train_of_digits() {return 0;}
+//  virtual tpctod* get_train_of_digits() {return 0;}
 
   virtual void set_zbin(const int i) {return;}
   virtual int get_zbin() const {return ~0x0;}
 
 
-  virtual void print() const {std::cout<<"PHG4Cellv1"<<std::endl;}
+  virtual void print() const {std::cout<<"virtual PHG4Cell"<<std::endl;}
 
   //! Procedure to add a new PROPERTY tag:
   //! 1.add new tag below with unique value,
@@ -155,7 +156,7 @@ class PHG4Cell: public PHObject
   PHG4Cell() {}
   virtual unsigned int get_property_nocheck(const PROPERTY prop_id) const {return UINT_MAX;}
   virtual void set_property_nocheck(const PROPERTY prop_id,const unsigned int) {return;}
-  ClassDef(PHG4Cell,1)
+  ClassDef(PHG4Cell,2)
 };
 
 
